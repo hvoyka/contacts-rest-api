@@ -7,14 +7,16 @@ const app = express();
 const CONTACTS = [
     {id: v4(), name: 'Стас', value:'9999999', marked: false}
 ];
-
+app.use(express.json())
 //GET
 app.get('/api/contacts', (req, res) => {
     res.status(200).json(CONTACTS);
 })
 //POST
 app.post('/api/contacts', (req, res) => {
-   
+    const contact = {...req.body, id: v4(), marked: false}
+    CONTACTS.push(contact)
+    res.status(201).json(contact)
 })
 
 app.use(express.static(path.resolve(__dirname, 'client')));
